@@ -53,9 +53,9 @@ public class Rule {
 			
 			if( obj.getClass().equals(this.getClass()) && this.lhs.equals( ((Rule)obj).lhs))
 			{
-				if ( rhs.size() ==  ((ArrayList<Symbol>)obj).size()  )
+				if ( rhs.size() ==  ((Rule)obj).getRhs().size()  )
 				{
-					ArrayList<Symbol>	array =  (ArrayList<Symbol>)obj;
+					ArrayList<Symbol>	array = ( (Rule)obj).rhs;
 					for (int i = 0; i < array.size(); i++) {
 						if ( ! rhs.get(i).equals(array.get(i))) return false;
 					}
@@ -82,15 +82,28 @@ public class Rule {
 		
 		String rh = "";
 		rh = rh + this.lhs + " -> ";
-		for ( int i = 0 ; i < rhs.size();  i++){
-			
+		for ( int i = 0 ; i < rhs.size();  i++){	
 			if ( idx == i ){
 				rh =  rh +"."+ rhs.get(i) + " ";
 			}else 
 				rh = rh + rhs.get(i) +" ";
 		}
+		if ( idx == rhs.size())
+			rh += ".";
 		
 		return rh;
 	}
+
+	 @Override
+	    public int hashCode()
+	    {
+	        int hash = 7;
+	        hash = 67 * hash + this.lhs.hashCode();
+	        int temp  =0; 
+	        for ( int i =0 ; i < rhs.size() ; i++)
+	        	temp+= rhs.get(i).hashCode();
+	        hash = 67 * hash + temp;
+	        return hash;
+	    }
 	
 }

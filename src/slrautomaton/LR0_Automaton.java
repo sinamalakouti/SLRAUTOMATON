@@ -14,7 +14,7 @@ import utils.Utils;
 
 public class LR0_Automaton {
 	
-	ArrayList<State> states = new ArrayList<State>();
+	public ArrayList<State> states = new ArrayList<State>();
 	HashMap<String, Symbol> symbols = new HashMap<String, Symbol>();
 	HashMap<String, ArrayList<Rule>> rules = new HashMap<String, ArrayList<Rule> >();
 
@@ -65,11 +65,13 @@ public class LR0_Automaton {
 				if ( islhs){
 					
 					Symbol symbol = symbols.get(tokens[i]);
+					System.out.println(tokens[i]);
 					if (symbol != null)
 						rule.setLhs(symbol);
 					else
 					{
-						System.err.println("Wrong Symbol !!");
+					
+						System.err.println("Wrong Symbol at token \t" + tokens[i]);
 						System.exit(0);
 					}
 					
@@ -83,7 +85,7 @@ public class LR0_Automaton {
 					}
 					else
 					{
-						System.err.println("Wrong Symbol !!");
+						System.err.println("Wrong Symbol at token \t" + tokens[i]);
 						System.exit(0);
 					}
 					
@@ -127,14 +129,59 @@ public class LR0_Automaton {
 		ArrayList<State> remainingStates = new ArrayList<State>();
 		remainingStates.add(state0);
 		while (remainingStates.size() > 0){
-			
+			System.out.println("remaining is \t " + remainingStates.size());
+			System.out.println("actual is \t" + states.size());
+			State currentState = remainingStates.get(0);
+			remainingStates.remove(0);
 //	TODO :  get all transaction states 
+			HashMap<Symbol, ArrayList<Rule>> nextTokens = getNextToken(currentState);
 			
-			
-			
-			
-			
-			
+			for(Symbol nextSymbol : nextTokens.keySet()){
+				State newState = new State();
+				newState.setNumber(states.size());
+//				if (states.size() == 12)
+//					System.exit(0);
+//				ArrayList<Integer> tempIndexes = new ArrayList<Integer>();	
+				
+				for ( int i = 0 ; i < nextTokens.get(nextSymbol).size() ; i++){
+					
+					Rule tempRule = nextTokens.get(nextSymbol).get(i);
+					for ( int j = 0 ; j< currentState.getDots().get(tempRule).size() ; j++){
+						if (currentState.getDots().get(tempRule).get(j) != tempRule.getRhs().size()){
+							
+							if ( tempRule.getRhs().get(currentState.getDots().get(tempRule).get(j)).equals(nextSymbol)){
+//								tempIndexes.add(currentState.getDots().get(tempRule).get(j) + 1);
+								newState = addRulesToState(newState, tempRule, currentState.getDots().get(tempRule).get(j) + 1);
+							}
+								
+						}
+						
+					}
+					
+					
+				}
+//				check whether the new state is real
+				if ( states.contains(newState) ){
+					State tmpState = states.get(states.indexOf(newState));
+					Link link = new Link(currentState,tmpState , nextSymbol);
+					currentState.getLinks().add(link);
+					
+					
+				}else {
+					
+					Link link = new Link(currentState, newState, nextSymbol);
+					currentState.getLinks().add(link);
+					remainingStates.add(newState);
+					states.add(newState);
+
+					
+					
+					
+				}
+				
+				
+				
+			}
 			
 			
 //		TODO  : 	check whether this state is already exists 
@@ -146,13 +193,43 @@ public class LR0_Automaton {
 		
 		
 	}
+	private HashMap<Symbol, ArrayList<Rule>> getNextToken(State state){
+		HashMap<Symbol, ArrayList<Rule>> firstTokens = new HashMap<Symbol, ArrayList<Rule>>();
+		for ( Rule rule : state.getDots().keySet()){
+			
+//			finding index of next tokens
+			ArrayList<Integer> nxtIndexes =state.getDots().get(rule);
+			for ( int i = 0 ; i < nxtIndexes.size() ; i ++){
+				if ( nxtIndexes.get(i) != rule.getRhs().size())
+					if (firstTokens.get( rule.getRhs().get(nxtIndexes.get(i))) == null){
+						ArrayList<Rule> temp = new ArrayList<Rule>();
+						temp.add(rule);
+						firstTokens.put(rule.getRhs().get(nxtIndexes.get(i)),temp );
+					}else {
+						
+						ArrayList<Rule> temp = firstTokens.get(rule.getRhs().get(nxtIndexes.get(i)));
+						if (! temp.contains( rule))
+							temp.add(rule);
+						firstTokens.put(rule.getRhs().get(nxtIndexes.get(i)),temp );
+							
+					}
+			}
+			
+			
+			
+			
+		}
+		
+		return firstTokens;
+	}
 	
 	private State  addRulesToState (State state  , Rule rule , int index ){
-		
+	if ( rule.getRhs().size() != index){
 		if ( state.getDots().get(rule) == null){
 			ArrayList<Integer> list = new ArrayList<Integer>();
 			list.add(index);
 			state.getDots().put(rule, list );
+			
 			Symbol nxtSymbol = rule.getRhs().get(index);
 			if ( nxtSymbol.getIsTerminal() == false){
 				ArrayList<Rule> newRules = this.rules.get(nxtSymbol.getValue());
@@ -183,6 +260,21 @@ public class LR0_Automaton {
 			
 			
 		}
+	}else {
+		
+		if ( state.getDots().get(rule) == null){
+			ArrayList<Integer> list = new ArrayList<Integer>();
+			list.add(index);
+			state.getDots().put(rule, list);
+			
+		}else {
+			
+			ArrayList<Integer> list = state.getDots().get(rule);
+			list.add(index);
+			state.getDots().put(rule, list);
+		}
+		
+	}
 		
 		return state;
 		
@@ -192,7 +284,11 @@ public class LR0_Automaton {
 	public static void main(String[] args) throws FileNotFoundException {
 	LR0_Automaton automata = new LR0_Automaton();
 	automata.readFile("/Users/sina/Documents/workspace/SLRAUTOMATON/input1.txt");
+	
 	automata.InitAutomaton();
+	for (int i=0 ; i< automata.states.size() ; i ++){
+		System.out.println(automata.states.get(i));
+	}
 	System.out.println("exit");
 	}
 }

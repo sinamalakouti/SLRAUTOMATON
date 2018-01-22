@@ -1,9 +1,7 @@
-a b c d h r g
-S A B
-S -> a S
-S -> b A
-S -> c B
-A -> d
-A -> h
-B -> r
-B -> g
+; ( ) int +
+S E T
+S -> E
+E -> T ;
+E -> T + E
+T -> int
+T -> ( E )

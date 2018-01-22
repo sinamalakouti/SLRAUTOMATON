@@ -1,14 +1,16 @@
 package slrautomaton;
 
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.HashMap;
+import java.util.Objects;
 
 import grammer.Rule;
 //TODO : tostring equals
 public class State {
 	private int number; 
-	private ArrayList<Rule> rules;
-	private ArrayList<Link> links;
+	private ArrayList<Rule> rules = new ArrayList<Rule>();
+	private ArrayList<Link> links = new ArrayList<Link>();
 	private HashMap<Rule, ArrayList<Integer>> dots = new HashMap<Rule, ArrayList<Integer>>();
 	public State(int number , ArrayList<Rule> rules , ArrayList<Link> links){
 		this.number = number;
@@ -93,10 +95,26 @@ public class State {
 			
 		}
 		
+for ( int i = 0 ; i < links.size() ; i ++){
+			
+			str = str  + "go from   "+ links.get(i).getFrom().getNumber() + "  to  :  " + 
+			links.get(i).getTo().getNumber() + "    with :   " + links.get(i).getOn().getValue();
+			str = str + "\n";
+		}
+		
 		str += "}\n";
+		
 		
 		return str;
 		
 	}
+	 @Override
+	    public int hashCode()
+	    {
+	        int hash = 3;
+	        hash = 53 * hash + Objects.hashCode(this.rules);
+	        hash = 53 * hash + Objects.hashCode(this.links);
+	        return hash;
+	    }
 
 }

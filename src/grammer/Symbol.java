@@ -49,4 +49,11 @@ public class Symbol {
 			return this;
 		return null;
 	}
+	
+	@Override
+	public int hashCode() {
+		int hash = 9;
+		hash = 83 * hash + value.hashCode();
+		return hash;
+	}
 }

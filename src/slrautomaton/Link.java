@@ -1,5 +1,7 @@
 package slrautomaton;
 
+import java.util.Objects;
+
 import grammer.Symbol;
 
 public class Link {
@@ -63,5 +65,16 @@ public class Link {
 	public void setOn(Symbol on) {
 		this.on = on;
 	}
+	
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 5;
+        hash = 11 * hash + this.from.hashCode();
+        hash = 11 * hash + this.to.hashCode();
+        hash = 11 * hash + Objects.hashCode(this.on);
+        return hash;
+    }
 
 }
