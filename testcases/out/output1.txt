@@ -1,0 +1,55 @@
+S0: {
+S -> .b A 
+S -> .a S 
+S -> .c B 
+go from   0  to  :  1    with :   b
+go from   0  to  :  2    with :   a
+go from   0  to  :  3    with :   c
+}
+S1: {
+A -> .d 
+S -> b .A 
+A -> .h 
+go from   1  to  :  4    with :   d
+go from   1  to  :  5    with :   h
+go from   1  to  :  6    with :   A
+}
+S2: {
+S -> .b A 
+S -> a .S 
+S -> .a S 
+S -> .c B 
+go from   2  to  :  1    with :   b
+go from   2  to  :  2    with :   a
+go from   2  to  :  3    with :   c
+go from   2  to  :  7    with :   S
+}
+S3: {
+B -> .g 
+S -> c .B 
+B -> .r 
+go from   3  to  :  8    with :   B
+go from   3  to  :  9    with :   g
+go from   3  to  :  10    with :   r
+}
+S4: {
+A -> d .
+}
+S5: {
+A -> h .
+}
+S6: {
+S -> b A .
+}
+S7: {
+S -> a S .
+}
+S8: {
+S -> c B .
+}
+S9: {
+B -> g .
+}
+S10: {
+B -> r .
+}

@@ -1,0 +1,58 @@
+S0: {
+T -> .( E ) 
+E -> .T + E 
+E -> .T ; 
+S -> .E 
+T -> .int 
+go from   0  to  :  1    with :   T
+go from   0  to  :  2    with :   (
+go from   0  to  :  3    with :   E
+go from   0  to  :  4    with :   int
+}
+S1: {
+E -> T .+ E 
+E -> T .; 
+go from   1  to  :  5    with :   ;
+go from   1  to  :  6    with :   +
+}
+S2: {
+T -> ( .E ) 
+T -> .( E ) 
+E -> .T + E 
+E -> .T ; 
+T -> .int 
+go from   2  to  :  1    with :   T
+go from   2  to  :  2    with :   (
+go from   2  to  :  7    with :   E
+go from   2  to  :  4    with :   int
+}
+S3: {
+S -> E .
+}
+S4: {
+T -> int .
+}
+S5: {
+E -> T ; .
+}
+S6: {
+E -> T + .E 
+E -> .T + E 
+T -> .( E ) 
+E -> .T ; 
+T -> .int 
+go from   6  to  :  1    with :   T
+go from   6  to  :  2    with :   (
+go from   6  to  :  8    with :   E
+go from   6  to  :  4    with :   int
+}
+S7: {
+T -> ( E .) 
+go from   7  to  :  9    with :   )
+}
+S8: {
+E -> T + E .
+}
+S9: {
+T -> ( E ) .
+}

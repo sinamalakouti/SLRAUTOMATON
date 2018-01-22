@@ -1,7 +1,12 @@
 ; ( ) int +
-S E T
+S E T			
 S -> E
-E -> T ;
+E -> T   ;
 E -> T + E
+
+
+
+
 T -> int
 T -> ( E )
+

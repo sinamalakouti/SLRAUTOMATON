@@ -1,0 +1,48 @@
+S0: {
+S -> .B 
+B -> .a B 
+B -> .c 
+A -> .b A 
+S -> .A 
+A -> .d 
+go from   0  to  :  1    with :   A
+go from   0  to  :  2    with :   B
+go from   0  to  :  3    with :   b
+go from   0  to  :  4    with :   a
+go from   0  to  :  5    with :   c
+go from   0  to  :  6    with :   d
+}
+S1: {
+S -> A .
+}
+S2: {
+S -> B .
+}
+S3: {
+A -> b .A 
+A -> .b A 
+A -> .d 
+go from   3  to  :  7    with :   A
+go from   3  to  :  3    with :   b
+go from   3  to  :  6    with :   d
+}
+S4: {
+B -> a .B 
+B -> .a B 
+B -> .c 
+go from   4  to  :  8    with :   B
+go from   4  to  :  4    with :   a
+go from   4  to  :  5    with :   c
+}
+S5: {
+B -> c .
+}
+S6: {
+A -> d .
+}
+S7: {
+A -> b A .
+}
+S8: {
+B -> a B .
+}
