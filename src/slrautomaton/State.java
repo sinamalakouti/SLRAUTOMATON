@@ -108,13 +108,5 @@ for ( int i = 0 ; i < links.size() ; i ++){
 		return str;
 		
 	}
-	 @Override
-	    public int hashCode()
-	    {
-	        int hash = 3;
-	        hash = 53 * hash + Objects.hashCode(this.rules);
-	        hash = 53 * hash + Objects.hashCode(this.links);
-	        return hash;
-	    }
-
+	
 }

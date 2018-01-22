@@ -67,14 +67,4 @@ public class Link {
 	}
 	
 
-    @Override
-    public int hashCode()
-    {
-        int hash = 5;
-        hash = 11 * hash + this.from.hashCode();
-        hash = 11 * hash + this.to.hashCode();
-        hash = 11 * hash + Objects.hashCode(this.on);
-        return hash;
-    }
-
 }

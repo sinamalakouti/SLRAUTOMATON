@@ -94,16 +94,6 @@ public class Rule {
 		return rh;
 	}
 
-	 @Override
-	    public int hashCode()
-	    {
-	        int hash = 7;
-	        hash = 67 * hash + this.lhs.hashCode();
-	        int temp  =0; 
-	        for ( int i =0 ; i < rhs.size() ; i++)
-	        	temp+= rhs.get(i).hashCode();
-	        hash = 67 * hash + temp;
-	        return hash;
-	    }
+	 
 	
 }
